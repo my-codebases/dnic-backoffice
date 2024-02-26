@@ -10,11 +10,10 @@ export default function App() {
   return (
     <>
       <BrowserRouter>
-        <Menu />
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />
           {sections.map((section) => (
-            <Route path="/{section}" element={<Section sectionName={section} />} />
+            <Route path={`/${section}`} element={<Section sectionName={section} />} />
           ))}
         </Routes>
       </BrowserRouter>

@@ -3,8 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Section from './pages/Section'
 
 import './App.css'
-
-const sections = ['home', 'users', 'agenda', 'settings']
+import { sectionsArray } from './pages/Section.jsx';
 
 export default function App() {
   return (
@@ -12,8 +11,8 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />
-          {sections.map((section) => (
-            <Route path={`/${section}`} element={<Section sectionName={section} />} />
+          {sectionsArray.map((section) => (
+            <Route key={section} path={`/${section}`} element={<Section sectionName={section} />} />
           ))}
         </Routes>
       </BrowserRouter>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 export default function Home() {
   return (
     <>
-      <h1 className='mb-6 text-4xl font-bold'>Sistema de Gestión Interna</h1>
+      <h1 className='mb-6 text-4xl font-bold'>Sistema Interno de Gestión</h1>
       <p className='text-xl'>Bienvenido al Sistema de Gestión de Usuarios y Turnos de la DNIC</p>
       <h3 className='mt-8 mb-2 text-3xl font-semibold'>Acceso Rápido:</h3>
       <ul>

@@ -72,7 +72,7 @@ export default function Users() {
                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.last_name}</td>
                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.first_name}</td>
                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.last_updated_date}</td>
-                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'><button onClick={() => deleteUser(user.username)}><span class="material-symbols-outlined">delete</span></button></td>
+                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'><button onClick={() => deleteUser(user.username)}><span className="material-symbols-outlined">delete</span></button></td>
               </tr>
             ))}
           </tbody>

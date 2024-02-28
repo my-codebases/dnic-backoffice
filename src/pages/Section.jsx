@@ -18,7 +18,7 @@ export default function Section({sectionName}) {
   
   return (
     <div className="min-h-screen md:flex">
-      <nav id="side-menu" className="min-w-[320px] py-6 bg-slate-300">
+      <nav id="side-menu" className="min-w-[320px] py-6 flex flex-col justify-between bg-slate-300">
         <NavBar sections={sections} />
       </nav>
       <main id="page-container" className="flex-auto p-6">

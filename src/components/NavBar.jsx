@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
+import { useLogout } from "../hooks/useLogout";
 
 export default function Navbar({sections}) {
+  const { logout } = useLogout();
+
   return (
     <>
-      <ul>
+      <ul id="nav-links">
         {Object.keys(sections).map(sectionName => {
           const isDisabled = sections[sectionName].disabled;
           return (
@@ -15,6 +18,12 @@ export default function Navbar({sections}) {
           </li>
         )})}
       </ul>
+      <div id="sign-out-button">
+        <Link onClick={logout} className="block px-6 py-2 mb-2 font-medium no-underline text-sky-700 hover:text-sky-900 hover:bg-slate-400">
+          <span className='material-symbols-outlined align-middle'>exit_to_app</span>
+          <span className='align-middle'>&nbsp;Cerrar sesión</span>
+        </Link>
+      </div>
     </>
   )
 }

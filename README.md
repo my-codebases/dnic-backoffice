@@ -15,5 +15,7 @@ $ brew install vite
 
 $ npm install --save-dev vite
 
+$ npm install react-spinners
+
 $ npm run dev
 ```

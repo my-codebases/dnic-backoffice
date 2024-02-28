@@ -8,15 +8,15 @@ export default function Users() {
 
   async function deleteUser(username) {
     const user = JSON.parse(localStorage.getItem("user"));
-      const response = await fetch(
-        `/backoffice/users/${username}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Authorization": "Bearer " + user["user_token"]
-          },
+    const response = await fetch(
+      `http://localhost:8080/backoffice/users/${username}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Authorization": "Bearer " + user["user_token"]
         },
-      );
+      },
+    );
 
     if (!response.ok) {
       console.error('Error deleting user', response);
@@ -58,10 +58,10 @@ export default function Users() {
       <section id='search' className='mt-8 mb-2 flex items-center gap-6'>
         <h3 className='text-xl'>Filtrar por Cédula:</h3>
         <div className='relative'>
-          <input 
-            type='text' 
-            placeholder='Buscar' 
-            className='p-2 shadow appearance-none border rounded min-w-64 py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline pl-10' 
+          <input
+            type='text'
+            placeholder='Buscar'
+            className='p-2 shadow appearance-none border rounded min-w-64 py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline pl-10'
             onChange={handleInputChange}
           />
           <span className="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 cursor-default">search</span>
@@ -83,33 +83,33 @@ export default function Users() {
               .filter(user => user.username.startsWith(searchTerm))
               .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
               .map((user) => (
-              <tr key={user.username}>
-                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{addDelimitersTo(user.username)}</td>
-                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.last_name}</td>
-                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.first_name}</td>
-                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.last_updated_date}</td>
-                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'><button onClick={() => deleteUser(user.username)}><span className="material-symbols-outlined">delete</span></button></td>
-              </tr>
-            ))}
+                <tr key={user.username}>
+                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{addDelimitersTo(user.username)}</td>
+                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.last_name}</td>
+                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.first_name}</td>
+                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.last_updated_date}</td>
+                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'><button onClick={() => deleteUser(user.username)}><span className="material-symbols-outlined">delete</span></button></td>
+                </tr>
+              ))}
           </tbody>
         </table>
         {users.length > itemsPerPage &&
-        (<div className='pagination flex justify-between space-x-2 mt-4'>
-        <button 
-          onClick={() => setCurrentPage(currentPage - 1)} 
-          disabled={currentPage === 1}
-          className={`px-4 py-2 text-white focus:outline-none ${currentPage === 1 ? 'bg-gray-400 cursor-default' : 'bg-slate-600 rounded hover:bg-slate-800 cursor-pointer'}`}
-        >
-          Previous
-        </button>
-        <button 
-          onClick={() => setCurrentPage(currentPage + 1)} 
-          disabled={currentPage === Math.ceil(users.filter(user => user.username.startsWith(searchTerm)).length / itemsPerPage)}
-          className={`px-4 py-2 text-white focus:outline-none ${currentPage === Math.ceil(users.length / itemsPerPage) ? 'bg-gray-400 cursor-default' : 'bg-slate-600 rounded hover:bg-slate-800 cursor-pointer'}`}
-        >
-          Next
-        </button>
-      </div>)}
+          (<div className='pagination flex justify-between space-x-2 mt-4'>
+            <button
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`px-4 py-2 text-white focus:outline-none ${currentPage === 1 ? 'bg-gray-400 cursor-default' : 'bg-slate-600 rounded hover:bg-slate-800 cursor-pointer'}`}
+            >
+              Previous
+            </button>
+            <button
+              onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={currentPage === Math.ceil(users.filter(user => user.username.startsWith(searchTerm)).length / itemsPerPage)}
+              className={`px-4 py-2 text-white focus:outline-none ${currentPage === Math.ceil(users.length / itemsPerPage) ? 'bg-gray-400 cursor-default' : 'bg-slate-600 rounded hover:bg-slate-800 cursor-pointer'}`}
+            >
+              Next
+            </button>
+          </div>)}
       </section>
     </>
   )

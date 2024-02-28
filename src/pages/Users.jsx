@@ -7,9 +7,16 @@ export default function Users() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
   async function deleteUser(username) {
-    const response = await fetch(`//backoffice/users/${username}`, {
-      method: 'DELETE',
-    });
+    const user = JSON.parse(localStorage.getItem("user"));
+      const response = await fetch(
+        `/backoffice/users/${username}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Authorization": "Bearer " + user["user_token"]
+          },
+        },
+      );
 
     if (!response.ok) {
       console.error('Error deleting user', response);
@@ -20,7 +27,16 @@ export default function Users() {
 
   useEffect(() => {
     async function fetchUsers() {
-      const response = await fetch('https://private-10044-dnicbackoffice.apiary-mock.com/api/backoffice/users/info');
+      const user = JSON.parse(localStorage.getItem("user"));
+      const response = await fetch(
+        "http://localhost:8080/backoffice/users",
+        {
+          method: "GET",
+          headers: {
+            "Authorization": "Bearer " + user["user_token"]
+          },
+        },
+      );
       const data = await response.json();
       setUsers(data);
     }

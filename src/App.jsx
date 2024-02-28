@@ -1,21 +1,32 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { useAuthContext } from "./hooks/useAuthContext";
 
-import Section from './pages/Section'
+import Login from './pages/Login';
+import Section from './pages/Section';
 
-import './App.css'
+import './App.css';
 import { sectionsArray } from './pages/Section.jsx';
 
 export default function App() {
+  const { user, authIsReady } = useAuthContext();
+  
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Navigate to="/home" />} />
-          {sectionsArray.map((section) => (
-            <Route key={section} path={`/${section}`} element={<Section sectionName={section} />} />
-          ))}
-        </Routes>
-      </BrowserRouter>
+      {authIsReady && (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={ user ? <Navigate to="/home" /> : <Navigate to="/login" /> } />
+            <Route path="/login" element={ user ? <Navigate to="/home" /> : <Login /> } /> 
+            {sectionsArray.map((section) => (
+              <Route
+                key={section}
+                path={`/${section}`}
+                element={ user ? <Section sectionName={section} /> : <Navigate to="/login" /> }
+              />
+            ))}
+          </Routes>
+        </BrowserRouter>
+      )}
     </>
   )
 }

@@ -35,6 +35,42 @@ h1 {
   line-height: 1.1;
 }
 
+.row-container {
+  position: relative;
+}
+
+.deleted-row {
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  animation: slideOutLeft 1s forwards;
+  @apply bg-slate-200 text-slate-300;
+}
+
+.fade-in {
+  animation: fadeIn 1.5s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -46,22 +82,4 @@ h1 {
   button {
     background-color: #f9f9f9;
   }
-}
-
-@keyframes slideOutLeft {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  50% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-}
-.deleted-row {
-  animation: slideOutLeft 2s forwards;
 }

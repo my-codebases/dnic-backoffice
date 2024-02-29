@@ -5,24 +5,29 @@ export default function Users() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [deletedUsers, setDeletedUsers] = useState([]);
 
   async function deleteUser(username) {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const response = await fetch(
-      `http://localhost:8080/backoffice/users/${username}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Authorization": "Bearer " + user["user_token"]
-        },
-      },
-    );
+    setDeletedUsers([...deletedUsers, username]);
 
-    if (!response.ok) {
-      console.error('Error deleting user', response);
-    } else {
-      setUsers(users.filter(user => user.username !== username));
-    }
+    setTimeout(async () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const response = await fetch(
+        `http://localhost:8080/backoffice/users/${username}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Authorization": "Bearer " + user["user_token"]
+          },
+        },
+      );
+
+      if (!response.ok) {
+        console.error('Error deleting user', response);
+      } else {
+        setUsers(users.filter(user => user.username !== username));
+      }
+    }, 2000);
   }
 
   useEffect(() => {
@@ -83,13 +88,20 @@ export default function Users() {
               .filter(user => user.username.startsWith(searchTerm))
               .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
               .map((user) => (
-                <tr key={user.username}>
-                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{addDelimitersTo(user.username)}</td>
-                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.last_name}</td>
-                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.first_name}</td>
-                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.last_updated_date}</td>
-                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'><button onClick={() => deleteUser(user.username)}><span className="material-symbols-outlined">delete</span></button></td>
-                </tr>
+                deletedUsers.includes(user.username) ? (
+                  <tr key={user.username} className='deleted-row bg-slate-300 text-slate-500 text-md'>
+                    <td colSpan='4' className='px-6 py-4 whitespace-nowrap'>Eliminado correctamente</td>
+                    <td className='px-6 py-4 whitespace-nowrap'><button onClick={() => deleteUser(user.username)}><span className="material-symbols-outlined">delete</span></button></td>
+                  </tr>
+                ) : (
+                  <tr key={user.username}>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{addDelimitersTo(user.username)}</td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.last_name}</td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.first_name}</td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{user.last_updated_date}</td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'><button onClick={() => deleteUser(user.username)}><span className="material-symbols-outlined">delete</span></button></td>
+                  </tr>
+                )
               ))}
           </tbody>
         </table>

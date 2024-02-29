@@ -14,7 +14,7 @@ export default function Login() {
   };
 
   return (
-    <main className="flex w-full h-screen items-stretch">
+    <main className="flex w-full h-screen overflow-y-clip items-stretch">
       <section className="p-12 flex flex-col justify-center items-center">
         <form
           className="flex w-72 flex-col gap-4 items-stretch"

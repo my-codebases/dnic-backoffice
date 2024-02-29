@@ -17,11 +17,11 @@ export default function Section({sectionName}) {
   const PageComponent = sections[sectionName.toLowerCase()].page;
   
   return (
-    <div className="min-h-screen md:flex">
-      <nav id="side-menu" className="min-w-[320px] py-6 flex flex-col justify-between bg-slate-300">
+    <div className="w-full h-screen md:flex">
+      <nav id="side-menu" className="min-w-[320px] h-screen overflow-y-clip py-6 flex flex-col justify-between bg-slate-300">
         <NavBar sections={sections} />
       </nav>
-      <main id="page-container" className="flex-auto p-6">
+      <main id="page-container" className="h-screen overflow-y-scroll p-6 flex-auto">
         <PageComponent />
       </main>
     </div>

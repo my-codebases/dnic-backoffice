@@ -89,7 +89,7 @@ export default function Users() {
               .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
               .map((user) => (
                 deletedUsers.includes(user.username) ? (
-                  <tr key={user.username} className='deleted-row bg-slate-300 text-slate-500 text-md'>
+                  <tr key={user.username} className='deleted-row bg-slate-200 text-slate-400 text-md'>
                     <td colSpan='4' className='px-6 py-4 whitespace-nowrap'>Eliminado correctamente</td>
                     <td className='px-6 py-4 whitespace-nowrap'><button onClick={() => deleteUser(user.username)}><span className="material-symbols-outlined">delete</span></button></td>
                   </tr>

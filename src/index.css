@@ -56,12 +56,12 @@ h1 {
   position: absolute;
   width: 100%;
   z-index: 1;
-  animation: slideOutLeft 1s forwards;
+  animation: slideOutLeft 2s forwards;
   @apply bg-slate-200 text-slate-300;
 }
 
 .fade-in {
-  animation: fadeIn 1.5s;
+  animation: fadeIn 2.5s;
 }
 
 @keyframes fadeIn {

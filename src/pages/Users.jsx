@@ -10,25 +10,11 @@ export default function Users() {
 
   async function deleteUser(username) {
     const user = JSON.parse(localStorage.getItem("user"));
-    const url = localStorage.getItem("url");
-    const response = await fetch(
-      `${url}/backoffice/users/${username}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Authorization": "Bearer " + user["user_token"]
-        },
-      },
-    );
-
-    if (!response.ok) {
-      console.error('Error deleting user', response);
-    } else {
-      setDeletedUsername(username);
-      setTimeout(() => {
-        setUsers(users.filter(user => user.username !== username));
-      }, 2000);
-    }
+    
+    setDeletedUsername(username);
+    setTimeout(() => {
+      setUsers(users.filter(user => user.username !== username));
+    }, 2000);
   }
 
   function handleViewUser(user) {

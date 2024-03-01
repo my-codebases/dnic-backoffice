@@ -89,7 +89,6 @@ export default function Users() {
               <th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>NOMBRE</th>
               <th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>FECHA DE ACTUALIZACIÓN</th>
               <th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'></th>
-              <th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'></th>
             </tr>
           </thead>
           <tbody className='bg-white divide-y divide-gray-200 row-container'>
@@ -103,8 +102,10 @@ export default function Users() {
                     <td className='px-6 py-4 whitespace-nowrap'>{user.last_name}</td>
                     <td className='px-6 py-4 whitespace-nowrap'>{user.first_name}</td>
                     <td className='px-6 py-4 whitespace-nowrap'>{user.last_updated_date}</td>
-                    <td className='px-6 py-4 whitespace-nowrap'><button onClick={() => handleViewUser(user)}><span className="material-symbols-outlined">visibility</span></button></td>
-                    <td className='px-6 py-4 whitespace-nowrap'><button onClick={() => deleteUser(user.username)}><span className="material-symbols-outlined">delete</span></button></td>
+                    <td className='px-6 py-4 whitespace-nowrap'>
+                      <button onClick={() => handleViewUser(user)}><span className="material-symbols-outlined mr-4">visibility</span></button>
+                      <button onClick={() => deleteUser(user.username)}><span className="material-symbols-outlined">delete</span></button>
+                    </td>
                   </tr>
                   {deletedUsername === user.username && (
                     <tr className='h-16 text-md bg-slate-200'>

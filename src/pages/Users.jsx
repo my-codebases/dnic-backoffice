@@ -10,8 +10,9 @@ export default function Users() {
 
   async function deleteUser(username) {
     const user = JSON.parse(localStorage.getItem("user"));
+    const url = localStorage.getItem("url");
     const response = await fetch(
-      `http://localhost:8080/backoffice/users/${username}`,
+      `${url}/backoffice/users/${username}`,
       {
         method: "DELETE",
         headers: {
@@ -41,8 +42,9 @@ export default function Users() {
   useEffect(() => {
     async function fetchUsers() {
       const user = JSON.parse(localStorage.getItem("user"));
+      const url = localStorage.getItem("url");
       const response = await fetch(
-        "http://localhost:8080/backoffice/users",
+        `${url}/backoffice/users`,
         {
           method: "GET",
           headers: {

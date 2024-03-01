@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -7,6 +6,7 @@ export default function Users() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [deletedUsername, setDeletedUsername] = useState('');
+  const [userToDisplay, setUserToDisplay] = useState(null);
 
   async function deleteUser(username) {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -28,6 +28,14 @@ export default function Users() {
         setUsers(users.filter(user => user.username !== username));
       }, 2000);
     }
+  }
+
+  function handleViewUser(user) {
+    setUserToDisplay(user);
+  }
+
+  function handleModalClose() {
+    setUserToDisplay(null);
   }
 
   useEffect(() => {
@@ -81,6 +89,7 @@ export default function Users() {
               <th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>NOMBRE</th>
               <th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>FECHA DE ACTUALIZACIÓN</th>
               <th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'></th>
+              <th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'></th>
             </tr>
           </thead>
           <tbody className='bg-white divide-y divide-gray-200 row-container'>
@@ -94,6 +103,7 @@ export default function Users() {
                     <td className='px-6 py-4 whitespace-nowrap'>{user.last_name}</td>
                     <td className='px-6 py-4 whitespace-nowrap'>{user.first_name}</td>
                     <td className='px-6 py-4 whitespace-nowrap'>{user.last_updated_date}</td>
+                    <td className='px-6 py-4 whitespace-nowrap'><button onClick={() => handleViewUser(user)}><span className="material-symbols-outlined">visibility</span></button></td>
                     <td className='px-6 py-4 whitespace-nowrap'><button onClick={() => deleteUser(user.username)}><span className="material-symbols-outlined">delete</span></button></td>
                   </tr>
                   {deletedUsername === user.username && (
@@ -106,7 +116,8 @@ export default function Users() {
               ))}
           </tbody>
         </table>
-        {users.length > itemsPerPage &&
+        {
+          users.length > itemsPerPage &&
           (<div className='pagination flex justify-between space-x-2 mt-4'>
             <button
               onClick={() => setCurrentPage(currentPage - 1)}
@@ -122,7 +133,57 @@ export default function Users() {
             >
               Next
             </button>
-          </div>)}
+          </div>)
+        }
+        {
+          userToDisplay &&
+          (
+            <div className='fixed w-full h-full inset-0 z-40 flex items-center justify-center bg-gray-900 bg-opacity-60'>
+              <div className="px-8 py-6 min-w-96 max-w-md z-50 rounded-lg shadow-lg bg-white overflow-y-auto">
+                <div className='flex justify-between items-center gap-6 mb-6 pb-2 border-b border-gray-400'>
+                  <h4 className='text-sky-700 text-2xl font-semibold'>Detalles del Usuario</h4>
+                  <button className="hover:text-gray-500 align-middle" onClick={handleModalClose}>
+                    <span className="block material-symbols-outlined">close</span>
+                  </button>
+                </div>
+                <div className='flex flex-col justify-start items-start gap-6 text-lg font-medium'>
+                  <p>
+                    <span className="material-symbols-outlined user-details-icon mr-4 align-text-bottom">id_card</span>
+                    {userToDisplay.username || 'N/A'}
+                  </p>
+                  <p>
+                    <span className="material-symbols-outlined user-details-icon mr-4 align-text-bottom">person</span>
+                    {(userToDisplay.first_name && userToDisplay.last_name) ? `${userToDisplay.first_name} ${userToDisplay.last_name}` : 'N/A'}
+                  </p>
+                  <p>
+                    <span className="material-symbols-outlined user-details-icon mr-4 align-text-bottom">mail</span>
+                    {userToDisplay.email || 'N/A'}
+                  </p>
+                  <p>
+                    <span className="material-symbols-outlined user-details-icon mr-4 align-text-bottom">smartphone</span>
+                    {userToDisplay.phone || 'N/A'}
+                  </p>
+                  <div className='w-full grid grid-cols-2 gap-4'>
+                    <div>
+                      <h6 className='user-details-fieldname'>Vencimiento C.I.</h6>
+                      <p>{userToDisplay.id_card_expiration_date || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <h6 className='user-details-fieldname'>Vencimiento Pasaporte</h6>
+                      <p>{userToDisplay.passport_expiration_date || 'N/A'}</p>
+                    </div>
+                  </div>
+                  <div className="w-full grid grid-cols-2 items-center gap-x-8 text-gray-400 text-sm border-t border-gray-300 pt-4">
+                    <h6 className='text-start'>Fecha Creación</h6>
+                    <p className='text-end'>{userToDisplay.created_date || 'N/A'}</p>
+                    <h6 className='text-start'>Última actualización</h6>
+                    <p className='text-end'>{userToDisplay.last_updated_date || 'N/A'}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        }
       </section>
     </>
   )

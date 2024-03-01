@@ -24,6 +24,19 @@
   'opsz' 24
 }
 
+.material-symbols-outlined.user-details-icon {
+  @apply text-gray-400;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.user-details-fieldname {
+  @apply text-gray-400 text-sm;
+}
+
 body {
   margin: 0;
   width: 100vw;

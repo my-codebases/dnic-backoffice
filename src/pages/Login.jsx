@@ -1,12 +1,20 @@
 import { useLogin } from "./../hooks/useLogin";
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ClipLoader } from "react-spinners";
 
 export default function Login() {
+  const usernameRef = useRef(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login, isPending, error } = useLogin();
+
+
+  useEffect(() => {
+    if (usernameRef.current) {
+      usernameRef.current.focus();
+    }
+  }, []);
 
   async function handleLoginSubmit(e) {
     e.preventDefault();
@@ -25,6 +33,7 @@ export default function Login() {
           <h3 className='text-xl text-center'>Acceso Funcionarios</h3>
           <label htmlFor="username" className="-mb-4">Usuario</label>
           <input
+            ref={usernameRef}
             id="username"
             type="text"
             value={username}

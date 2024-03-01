@@ -1,6 +1,6 @@
 import { useLogin } from "./../hooks/useLogin";
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ClipLoader } from "react-spinners";
 
 export default function Login() {
@@ -17,7 +17,7 @@ export default function Login() {
     <main className="flex w-full h-screen overflow-y-clip items-stretch">
       <section className="p-12 flex flex-col justify-center items-center">
         <form
-          className="flex w-72 flex-col gap-4 items-stretch"
+          className="relative flex w-72 flex-col gap-4 items-stretch"
           onSubmit={handleLoginSubmit}
         >
           <h1 className='text-3xl font-medium text-center'>Sistema Interno de Gestión</h1>
@@ -29,10 +29,12 @@ export default function Login() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className="w-full py-2 px-3 bg-white text-gray-700 border rounded shadow appearance-none leading-tight focus:outline-none focus:shadow-outline"
+            autoComplete="on"
           />
 
           <label htmlFor="password" className="form_label">Contraseña</label>
           <input
+            id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -43,13 +45,10 @@ export default function Login() {
             {isPending ? <ClipLoader color="#ffffff" size={16} /> : "Ingresar" }
           </button>
 
-          {error && (
-            <Error
-              error={error}
-              errorColor={"text-primaryOrange"}
-              errorSize={"text-lg"}
-            />
-          )}
+          {
+            error && 
+            <p className={`absolute -bottom-12 w-full text-center text-lg font-bold`}>Error : {error}</p>
+          }
         </form>
       </section>
       <section className="flex-auto bg-login bg-no-repeat bg-cover bg-center"></section>

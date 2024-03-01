@@ -23,20 +23,26 @@ export const useLogin = () => {
       },
     );
 
-    const json = await response.json();
-
-    if (!response.ok) {
-      setIsPending(false);
-      setError(json.error);
-    }
-
+    setIsPending(false);
+    
     if (response.ok) {
-      setIsPending(false);
-
+      const json = await response.json();
       localStorage.setItem("user", JSON.stringify(json));
       dispatch({ type: "LOGIN", payload: json });
-
       navigate("/home");
+      return;
+    }
+
+    switch (response.status) {
+      case 403:
+        setError("Contraseña incorrecta");
+        break;
+      case 404:
+        setError("Usuario no encontrado");
+        break;
+      default:
+        setError("Ocurrió un error. Inténtelo nuevamente más tarde");
+        break;
     }
   };
 

@@ -14,7 +14,7 @@ export default function Users() {
     setDeletedUsername(username);
     setTimeout(() => {
       setUsers(users.filter(user => user.username !== username));
-    }, 2000);
+    }, 3000);
   }
 
   function handleViewUser(user) {

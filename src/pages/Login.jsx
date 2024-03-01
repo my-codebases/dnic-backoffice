@@ -10,6 +10,7 @@ export default function Login() {
 
   async function handleLoginSubmit(e) {
     e.preventDefault();
+    if (!username || !password) return;
     await login(username, password);
   };
 
@@ -17,12 +18,12 @@ export default function Login() {
     <main className="flex w-full h-screen overflow-y-clip items-stretch">
       <section className="p-12 flex flex-col justify-center items-center">
         <form
-          className="relative flex w-72 flex-col gap-4 items-stretch"
+          className="relative flex w-72 flex-col gap-6 items-stretch"
           onSubmit={handleLoginSubmit}
         >
           <h1 className='text-3xl font-medium text-center'>Sistema Interno de Gestión</h1>
           <h3 className='text-xl text-center'>Acceso Funcionarios</h3>
-          <label htmlFor="username" className="form_label">Usuario</label>
+          <label htmlFor="username" className="-mb-4">Usuario</label>
           <input
             id="username"
             type="text"
@@ -32,7 +33,7 @@ export default function Login() {
             autoComplete="on"
           />
 
-          <label htmlFor="password" className="form_label">Contraseña</label>
+          <label htmlFor="password" className="-mb-4">Contraseña</label>
           <input
             id="password"
             type="password"
@@ -41,7 +42,10 @@ export default function Login() {
             className="w-full py-2 px-3 bg-white text-gray-700 border rounded shadow appearance-none leading-tight focus:outline-none focus:shadow-outline"
           />
 
-          <button type="submit" className="w-full py-2 bg-sky-600 text-white font-semibold focus:outline-none rounded-md">
+          <button
+            type="submit"
+            className={`${username && password ? "bg-sky-600 text-white" : "bg-gray-300 text-gray-400 cursor-default"} w-full mt-6 py-2 font-semibold focus:outline-none rounded-md`}
+          >
             {isPending ? <ClipLoader color="#ffffff" size={16} /> : "Ingresar" }
           </button>
 
